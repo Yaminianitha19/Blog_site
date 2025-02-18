@@ -8,9 +8,21 @@ auth = Blueprint("auth", __name__)
 
 @auth.route("/login",methods=["GET", "POST"])
 def login():
-    email = request.form.get("email")
-    password = request.form.get("password")
-    return render_template("login.html")
+    if request.method == 'POST':
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        user = User.query.filter_by(email=email).first()
+        if user:
+            if check_password_hash(user.password, password):
+                flash("Logged in successfully!", category="success")
+                login_user(user, remember=True)
+                return redirect(url_for("views.home"))
+            else:
+                flash("Incorrect password, try again.", category="error")
+        else:
+            flash("Email does not exist.", category="error")
+        return render_template("login.html")
 
 @auth.route("/sign-up", methods=["GET", "POST"])
 def sign_up():
@@ -35,9 +47,10 @@ def sign_up():
         elif len(email) < 10:
             flash("Email in invalid", category="error")
         else:
-            new_user = User(email=email, username=username, password=password1)
+            new_user = User(email=email, username=username, password=generate_password_hash(password1, method = 'sha123'))
             db.session.add(new_user)
             db.session.commit()
+            login_user(new_user, remember=True)
             flash("Account created!", category="success")
             return redirect(url_for("views.home"))
 
@@ -51,4 +64,5 @@ def sign_up():
 
 @auth.route("/logout")
 def logout():
+    logout_user()
     return redirect(url_for("views.home"))
