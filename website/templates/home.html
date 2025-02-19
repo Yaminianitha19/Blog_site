@@ -1,8 +1,38 @@
 {% extends "base.html" %} 
 {% block title %}Home{% endblock %}
 {% block content %}
-<div class="container text-center">
-    <h1>Hey You! Welcome to our blog</h1>
-    <h5>"Blogging is not just writing; it’s a conversation between you and the world."!</h5>
+<div class="container text-center mb-4">
+    <h1>Hey You! Welcome to GlowStack</h1>
+    <h5>"Blogging is not just writing; it's a conversation between you and the world."!</h5>
+</div>
+<h1 align = "center">Posts</h1>
+<div id = "Posts">
+    {% for post in posts %}
+    <div class="card border-dark">
+        <div
+           class="card-header d-flex justify-content-between align-items-center"
+    >
+      <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
+      <div class="btn-group">
+        {% if user.id == post.user.id %}
+        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            <span class="fas fa-ellipsis-v"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+                <a class="dropdown-item" href="/delete-post/{{post.id}}">
+                    <i class="fas fa-trash"></i> Delete
+                </a>
+            </li>
+        </ul>
+        {% endif %}
+      </div>
+        </div>
+        <div class="card-body">
+            <div class="card-text">{{post.text}}</div>
+        </div>
+        <div class="card-footer text-muted">{{post.date_created}}</div>
+    </div>
+    {% endfor %}
 </div>
 {% endblock %}
