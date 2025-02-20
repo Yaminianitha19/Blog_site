@@ -26,7 +26,22 @@
         <div class="card-body">
             <div class="card-text">{{post.text}}</div>
             <br/>
-            <form class="input-group mb-3" method ='POST'action="/create-comment/{{post.id}}">
+            <div class="card">
+                <div class="card-body" id="comments-expanded-{{post.id}}">
+                    {% for comment in post.comments %}
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                            <a href="/posts/{{comment.user.username}}" class="fw-bold text-decoration-none">{{comment.user.username}}</a>
+                            <span class="ms-2">{{comment.text}}</span>
+                        </div>
+                        <div>
+                            <small class="text-muted">{{comment.date_created}}</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <form class="input-group mt-3" method="POST" action="/create-comment/{{post.id}}">
                 <input type="text" id="text" class="form-control" name="text" placeholder="Enter Comment">
                 <button class="btn btn-primary" type="submit">Comment</button>
             </form>
