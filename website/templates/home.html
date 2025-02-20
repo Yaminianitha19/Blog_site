@@ -5,34 +5,21 @@
     <h1>Hey You! Welcome to GlowStack</h1>
     <h5>"Blogging is not just writing; it's a conversation between you and the world."!</h5>
 </div>
-<h1 align = "center">Posts</h1>
-<div id = "Posts">
-    {% for post in posts %}
-    <div class="card border-dark">
-        <div
-           class="card-header d-flex justify-content-between align-items-center"
-    >
-      <a href="/posts/{{post.user.username}}">{{post.user.username}}</a>
-      <div class="btn-group">
-        {% if user.id == post.user.id %}
-        <button type="button" class="btn btn-sm btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-            <span class="fas fa-ellipsis-v"></span>
-        </button>
-        <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-                <a class="dropdown-item" href="/delete-post/{{post.id}}">
-                    <i class="fas fa-trash"></i> Delete
-                </a>
-            </li>
-        </ul>
-        {% endif %}
-      </div>
-        </div>
-        <div class="card-body">
-            <div class="card-text">{{post.text}}</div>
-        </div>
-        <div class="card-footer text-muted">{{post.date_created}}</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Create a Post</h5>
+        <form method="POST" action="/create-post">
+            <textarea name="text" class="form-control" rows="3" placeholder="What's on your mind?"></textarea>
+            <div class="text-end mt-2">
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+        </form>
     </div>
-    {% endfor %}
 </div>
+
+<div class="text-center">
+    <a href="/posts/{{user.username}}" class="btn btn-lg btn-primary">View My Posts</a>
+</div>
+
 {% endblock %}
