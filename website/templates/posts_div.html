@@ -25,6 +25,11 @@
         </div>
         <div class="card-body">
             <div class="card-text">{{post.text}}</div>
+            <br/>
+            <form class="input-group mb-3" method ='POST'action="/create-comment/{{post.id}}">
+                <input type="text" id="text" class="form-control" name="text" placeholder="Enter Comment">
+                <button class="btn btn-primary" type="submit">Comment</button>
+            </form>
         </div>
         <div class="card-footer text-muted">{{post.date_created}}</div>
     </div>
