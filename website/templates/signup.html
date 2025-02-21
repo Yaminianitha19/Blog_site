@@ -19,23 +19,56 @@
         placeholder="Enter Username"
         />
         <label for="password1">Password</label>
-        <input type="password" 
-        id="password1" 
-        name="password1" 
-        class="form-control"
-        placeholder="Enter Password"
-        />
-        <label for="password2">Password</label>
-        <input type="password" 
-        id="password2" 
-        name="password2" 
-        class="form-control"
-        placeholder="Enter Password Again"
-        />
+        <div class="input-group">
+            <input type="password" 
+            id="password1" 
+            name="password1" 
+            class="form-control"
+            placeholder="Enter Password"
+            />
+            <span class="input-group-text">
+                <i class="fas fa-eye" id="togglePassword1" style="cursor: pointer"></i>
+            </span>
+        </div>
+        <label for="password2">Confirm Password</label>
+        <div class="input-group">
+            <input type="password" 
+            id="password2" 
+            name="password2" 
+            class="form-control"
+            placeholder="Enter Password Again"
+            />
+            <span class="input-group-text">
+                <i class="fas fa-eye" id="togglePassword2" style="cursor: pointer"></i>
+            </span>
+        </div>
         <br/>
         <div align="center">
             <button class="btn btn-primary" type="submit">Sign Up</button>
         </div>
     </div>
 </form>
+{% endblock %}
+
+{% block javascript %}
+<script>
+const togglePassword1 = document.querySelector('#togglePassword1');
+const password1 = document.querySelector('#password1');
+const togglePassword2 = document.querySelector('#togglePassword2');
+const password2 = document.querySelector('#password2');
+
+togglePassword1.addEventListener('click', function (e) {
+    const type = password1.getAttribute('type') === 'password' ? 'text' : 'password';
+    password1.setAttribute('type', type);
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+});
+
+togglePassword2.addEventListener('click', function (e) {
+    const type = password2.getAttribute('type') === 'password' ? 'text' : 'password';
+    password2.setAttribute('type', type);
+    this.classList.toggle('fa-eye');
+    this.classList.toggle('fa-eye-slash');
+});
+</script>
 {% endblock %}
