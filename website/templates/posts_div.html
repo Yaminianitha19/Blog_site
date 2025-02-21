@@ -26,18 +26,30 @@
         <div class="card-body">
             <div class="card-text">{{post.text}}</div>
             <br/>
-            <p class="card-text">
-                {% if post.comments|length > 0 %}
-                <a class="text-decoration-none" data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
-                    <i class="fas fa-comments"></i>
-                    <small>View {{ post.comments|length }} Comment{% if post.comments|length > 1 %}s{% endif %}</small>
-                </a>
-                {% else %}
-                <small class="text-muted">
-                    <i class="fas fa-comments"></i> No comments yet
-                </small>
-                {% endif %}
-            </p>
+            <div class="d-flex align-items-center mb-2">
+                <form action="/like-post/{{post.id}}" method="POST" class="me-3">
+                    <button type="submit" class="btn btn-link p-0 text-decoration-none">
+                        {% if current_user.id in post.likes|map(attribute='author')|list %}
+                        <i class="fas fa-thumbs-up text-primary"></i>
+                        {% else %}
+                        <i class="far fa-thumbs-up"></i>
+                        {% endif %}
+                        <small class="ms-1">{{ post.likes|length }}</small>
+                    </button>
+                </form>
+                <p class="card-text">
+                    {% if post.comments|length > 0 %}
+                    <a class="text-decoration-none" data-bs-toggle="collapse" href="#comments-{{post.id}}" role="button">
+                        <i class="fas fa-comments"></i>
+                        <small>View {{ post.comments|length }} Comment{% if post.comments|length > 1 %}s{% endif %}</small>
+                    </a>
+                    {% else %}
+                    <small class="text-muted">
+                        <i class="fas fa-comments"></i> No comments yet
+                    </small>
+                    {% endif %}
+                </p>
+            </div>
             <div class="collapse" id="comments-{{post.id}}">
                 <div class="card">
                     <div class="card-body">

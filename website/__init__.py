@@ -19,7 +19,7 @@ def create_app():
     app.register_blueprint(views, url_prefix="/")
     app.register_blueprint(auth, url_prefix="/")
 
-    from .models import User, Post, Comment
+    from .models import User, Post, Comment, Like
     
     create_database(app)
     login_manager = LoginManager()
@@ -36,3 +36,4 @@ def create_database(app):
         with app.app_context():
             db.create_all()
             print("Created Database!")
+
